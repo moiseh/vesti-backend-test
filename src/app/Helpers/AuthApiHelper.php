@@ -34,7 +34,7 @@ class AuthApiHelper {
         }
 
         if ( empty($apiPassword) ) {
-            $this->apiPassword = $apiPassword;
+            $this->apiPassword = env('API_PASSWORD');
         }
     }
 
@@ -49,7 +49,7 @@ class AuthApiHelper {
 
         if ( empty($token) ) {
             $token = $this->getTokenResponse();
-            Cache::set('api_token', $token);
+            Cache::put('api_token', $token, 600); // grava token por 10 minutos
         }
 
         return $token;

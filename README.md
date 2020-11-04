@@ -1,8 +1,8 @@
 # VESTI Backend Test
 
-## Instruções
+## Instalação
 
-### 1. Subindo containers Docker (lumen + postgresql)
+### 1. Subindo containers Docker (lumen + PostgreSQL)
 
 ```bash
 docker-compose up
@@ -19,7 +19,14 @@ docker exec lumen composer install
 docker exec lumen php artisan migrate
 ```
 
-### 4. Execução dos testes PHPUnit
+## Instruções gerais
+
+### 1. Sincronização de produtos e estoques
+```bash
+docker exec lumen php artisan sync:products
+```
+
+### 2. Execução dos testes PHPUnit
 
 ```bash
 docker exec lumen ./vendor/bin/phpunit tests

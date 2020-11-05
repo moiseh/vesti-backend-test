@@ -2,7 +2,7 @@
 
 ## Instalação
 
-### 1. Subindo containers Docker (lumen + PostgreSQL)
+### 1. Subindo containers Docker (Lumen + PostgreSQL)
 
 ```bash
 docker-compose up

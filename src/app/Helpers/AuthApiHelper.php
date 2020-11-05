@@ -22,7 +22,11 @@ class AuthApiHelper {
     private $apiPassword;
 
     /**
-     * Constructor
+     * Constructor method
+     * 
+     * @param string $loginApiUrl
+     * @param string $apiEmail
+     * @param string $apiPassword
      */
     public function __construct($loginApiUrl = null, $apiEmail = null, $apiPassword = null) {
         if ( empty($loginApiUrl) ) {
@@ -64,8 +68,8 @@ class AuthApiHelper {
         $client = new Client();
         $result = $client->post($this->loginApiUrl, [
             'form_params' => [
-                "email" => $this->apiEmail,
-                "password" => $this->apiPassword,
+                'email' => $this->apiEmail,
+                'password' => $this->apiPassword,
             ]
         ]);
 

@@ -1,9 +1,6 @@
 <?php
 namespace App\Helpers;
 
-use Exception;
-use GuzzleHttp\Client;
-
 class ViewProductApiHelper {
     /**
      * @var int
@@ -44,9 +41,8 @@ class ViewProductApiHelper {
     private function callProductView() {
         $client = new ApiClientHelper();
         $apiUrl = $this->buildProductRequestUrl();
-        $response = $client->getJsonResponse($apiUrl);
-
-        return $response['body']['response'];
+        
+        return  $client->getJsonResponse($apiUrl);
     }
 
     /**

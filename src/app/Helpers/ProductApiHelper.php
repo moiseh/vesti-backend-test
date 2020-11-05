@@ -32,10 +32,9 @@ class ProductApiHelper {
      */
     public function fetchRemoteProducts($products = [], $page = 1) {
         $response = $this->callProductsList($page);
-        $body = $response['body']['response'];
-        $products = $body['data'];
-        $currentPage = $body['current_page'];
-        $lastPage = $body['last_page'];
+        $products = $response['data'];
+        $currentPage = $response['current_page'];
+        $lastPage = $response['last_page'];
         $hasNextPage = ( $currentPage < $lastPage );
         
         // enquanto houver proximos produtos, segue chamando funcao recursiva

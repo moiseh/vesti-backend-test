@@ -20,7 +20,7 @@ class ApiClientHelper extends Client {
 
         $this->validateResponseBody($response);
 
-        return $response;
+        return $response['body']['response'];
     }
 
     /**

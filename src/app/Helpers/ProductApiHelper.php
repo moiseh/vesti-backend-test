@@ -2,7 +2,6 @@
 namespace App\Helpers;
 
 use Exception;
-use GuzzleHttp\Client;
 
 class ProductApiHelper {
     /**
@@ -54,42 +53,9 @@ class ProductApiHelper {
      * @throws Exception
      */
     private function callProductsList($page) {
-        static $token = null;
-
-        // evita chamar demasiadamente a busca pelo token
-        if ( is_null($token) ) {
-            $auth = new AuthApiHelper();
-            $token = $auth->getToken();
-        }
-
-        $client = new Client();
+        $client = new ApiClientHelper();
         $apiProductsUrl = $this->buildProductsRequestUrl($page);
-
-        $result = $client->get($apiProductsUrl, [
-            'headers' => [
-                'authorization' => "Bearer {$token}",
-            ]
-        ]);
-
-        if ( $result->getStatusCode() != 200 ) {
-            throw new Exception('Erro na requisição.');
-        }
-
-        $response = json_decode($result->getBody(), true);
-
-        if ( empty($response['body']['response']) ) {
-            if ( !empty($response['body']['result']['messages'])) {
-                $messages = [];
-                foreach ( $response['body']['result']['messages'] as $field => $message ) {
-                    $messages[] = $field . ': ' . implode(', ', $message);
-                }
-
-                throw new Exception( sprintf("Erro no retorno de produtos:\n%s", implode("\n", $messages)) );
-            }
-            else {
-                throw new Exception('Ocorreu algum erro no retorno de produtos :(');
-            }
-        }
+        $response = $client->getJsonResponse($apiProductsUrl);
 
         return $response;
     }

@@ -42,32 +42,9 @@ class ViewProductApiHelper {
      * @throws Exception
      */
     private function callProductView() {
-        static $token = null;
-
-        // evita chamar demasiadamente a busca pelo token
-        if ( is_null($token) ) {
-            $auth = new AuthApiHelper();
-            $token = $auth->getToken();
-        }
-
-        $client = new Client();
+        $client = new ApiClientHelper();
         $apiUrl = $this->buildProductRequestUrl();
-
-        $result = $client->get($apiUrl, [
-            'headers' => [
-                'authorization' => "Bearer {$token}",
-            ]
-        ]);
-
-        if ( $result->getStatusCode() != 200 ) {
-            throw new Exception('Erro na requisição.');
-        }
-
-        $response = json_decode($result->getBody(), true);
-
-        if ( empty($response['body']['response']) ) {
-            throw new Exception('Aparentemente houve algum erro no retorno da visualizacao do produto.');
-        }
+        $response = $client->getJsonResponse($apiUrl);
 
         return $response['body']['response'];
     }
